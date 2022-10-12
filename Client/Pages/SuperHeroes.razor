@@ -1,0 +1,35 @@
+﻿@page "/superheroes"
+@inject ISuperHeroService SuperHeroService
+
+<PageTitle>Super Heroes</PageTitle>
+<h3>Super Heroes</h3>
+
+@if (SuperHeroService.SuperHeroes.Count <= 0)
+{
+	@*<span class="spinner-border text-primary">Loading...</span>*@
+
+	<div class="spinner-border" role="status">
+		<span class="sr-only">O</span>
+	</div>
+}
+else
+{
+	<p>A ul element is displayed like this:</p>
+
+	<ul class ="list-group">
+		@foreach (var hero in SuperHeroService.SuperHeroes)
+		{
+			<li class="list-group-item">@hero.FirstName - @hero.LastName = @hero.HeroName</li>
+	
+		}
+	</ul>
+	<br />
+	<p class="align-content-md-start">Change the default CSS settings to see the effect.</p>
+}
+
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		await SuperHeroService.GetSuperHeroes();
+	}
+}
